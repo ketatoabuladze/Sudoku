@@ -13,26 +13,31 @@ public class Server{
          sudoku.fillValues();
 
         if (args.length != 1) {
-            System.err.println("Usage: java EchoServer <port number>");
+            System.err.println("Usage: java Server <port number>");
             System.exit(1);
         }
          
         int portNumber = Integer.parseInt(args[0]);
+        ServerSocket serverSocket =
+        new ServerSocket(Integer.parseInt(args[0]));
+        //Socket clienSocket = serverSocket.accept();
 
-        try{
-            ServerSocket serverSocket =
-                new ServerSocket(Integer.parseInt(args[0]));
-        }catch (IOException e) {
-            System.out.println("Exception caught when trying to listen on port "
-                + portNumber + " or listening for a connection");
-            System.out.println(e.getMessage());
-        }
+        // try{
+        //     ServerSocket serverSocket =
+        //         new ServerSocket(Integer.parseInt(args[0]));
+        // }catch (IOException e) {
+        //     System.out.println("Exception caught when trying to listen on port "
+        //         + portNumber + " or listening for a connection");
+        //     System.out.println(e.getMessage());
+        // }
 
         ExecutorService executor = Executors.newCachedThreadPool();
 
         while(isRunning){
             try{
-                Socket clienSocket = serverSocket.accept();
+                // ServerSocket serverSocket =
+                // new ServerSocket(Integer.parseInt(args[0]));
+                 Socket clientSocket = serverSocket.accept();
                 executor.execute(new ClientHandler(clientSocket));
             } catch (IOException e){
                 if (!isRunning) break;
@@ -94,6 +99,10 @@ public class Server{
                         handleUpdate(clientName, input);
                     }else {
                         out.println("unkown command");
+                    }
+
+                    if(input.startsWith("show")){
+                        broadcast(sudoku.getSudokuString());
                     }
                 }
             } catch (IOException e) {
