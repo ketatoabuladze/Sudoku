@@ -20,23 +20,12 @@ public class Server{
         int portNumber = Integer.parseInt(args[0]);
         ServerSocket serverSocket =
         new ServerSocket(Integer.parseInt(args[0]));
-        //Socket clienSocket = serverSocket.accept();
 
-        // try{
-        //     ServerSocket serverSocket =
-        //         new ServerSocket(Integer.parseInt(args[0]));
-        // }catch (IOException e) {
-        //     System.out.println("Exception caught when trying to listen on port "
-        //         + portNumber + " or listening for a connection");
-        //     System.out.println(e.getMessage());
-        // }
 
         ExecutorService executor = Executors.newCachedThreadPool();
 
         while(isRunning){
             try{
-                // ServerSocket serverSocket =
-                // new ServerSocket(Integer.parseInt(args[0]));
                  Socket clientSocket = serverSocket.accept();
                 executor.execute(new ClientHandler(clientSocket));
             } catch (IOException e){
