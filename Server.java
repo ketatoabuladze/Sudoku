@@ -87,13 +87,13 @@ public class Server{
 
                     if(input.startsWith("UPDATE")) {
                         handleUpdate(clientName, input);
+                    }else if(input.startsWith("show")){
+                        broadcast(sudoku.getSudokuString());
                     }else {
                         out.println("unkown command");
                     }
 
-                    if(input.startsWith("show")){
-                        broadcast(sudoku.getSudokuString());
-                    }
+                 
                 }
             } catch (IOException e) {
                 System.out.println("Connection error" + e.getMessage());
